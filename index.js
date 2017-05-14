@@ -1,14 +1,29 @@
 'use strict';
 
+/*
+  Copyright 2017 DigitalSailors e.K.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
 const AWS = require('aws-sdk');
 const handlebars = require('handlebars');
 const querystring = require('querystring');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-// TODO make configurable!
-const hmacKeyHexString = 'c808e9f1fd0be55aefe7103e3396bab6'; // crypto.randomBytes(16).toString('hex');
-const hmacKey = new Buffer(hmacKeyHexString, 'hex');
+// crypto.randomBytes(16).toString('hex');
+const hmacKey = new Buffer(process.env.hmacKey, 'hex');
 
 exports.lambda = function(event, context, callback) {
 
@@ -25,7 +40,7 @@ exports.lambda = function(event, context, callback) {
     // CASE 1: display login page in response to a GET
     // console.log(event);
 
-    if (!event.queryStringParameters.response_type || event.queryStringParameters.response_type == 'id') {
+    if (true || !event.queryStringParameters.response_type || event.queryStringParameters.response_type == 'id') {
       const template = handlebars.compile(loginPageTemplate);
       const body = template(event.queryStringParameters);
       callback(null, {
@@ -64,7 +79,7 @@ exports.lambda = function(event, context, callback) {
       sessionToken: postData.temporary_aws_session_token
     });
     const params = {
-      RoleArn: 'arn:aws:iam::621073008195:role/IndieAuth',
+      RoleArn: process.env.iamRole,
       RoleSessionName: 'IndieAuth_Lambda'
     }
     sts.assumeRole(params).promise()
@@ -181,12 +196,16 @@ exports.lambda = function(event, context, callback) {
   }
 }
 
-const loginPageTemplate = `
+// TODO: Create a temp aws key on the client via STS and send this to the lambda version
+// TODO: add MFA
+/*
 <form name="iam_credentials">
   AWS API Key ID: <input type="text" name="aws_api_key_id"><br>
   AWS API Key: <input type="password" name="aws_api_key"><br>
   <input type="submit">
 </form>
+*/
+const loginPageTemplate = `
 <form name="indieauth_login" method="POST" action="/indieauth/authorize">
   Me: <input type="text" name="me" value="{{ me }}" readonly="readonly"><br>
   Redirect URI: <input type="text" name="redirect_uri" value="{{ redirect_uri }}" readonly="readonly"><br>

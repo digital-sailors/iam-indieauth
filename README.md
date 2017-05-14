@@ -11,6 +11,8 @@ For details see:
 https://indieweb.org/IndieAuthProtocol
 https://indieweb.org/authorization-endpoint
 
+This project was started at the IndieWebCamp 2017 in Düsseldorf, Germany.
+
 ## Installation
 
 - Install the code as a Lambda function.

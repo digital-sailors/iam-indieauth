@@ -1,0 +1,24 @@
+{
+  "name": "iam-indieauth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "test-coverage": "istanbul cover _mocha",
+    "xpredeploy": "git log -1 --pretty=format:'{ \"date\":\"%cI\", \"commit\":\"%H\" }' > git-commit.json",
+    "deploy": "zip -r iam-indieauth.zip . -i \\*.js -i git-commit.json -i node_modules/\\* -x test/\\* -x node_modules/aws-sdk/\\* -x node_modules/mocha/\\* && echo Uploading... && aws lambda update-function-code --function-name api-iam-indieauth --zip-file fileb://iam-indieauth.zip --publish"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.50.0",
+    "handlebars": "^4.0.8",
+    "jsonwebtoken": "^7.4.0",
+    "ramda": "^0.23.0"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Oliver Gutperl",
+    "email": "oliver.gutperl@digital-sailors.de",
+    "url": "https://www.digital-sailors.de"
+  }
+}

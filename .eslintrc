@@ -1,0 +1,10 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "rules": {
+    "object-curly-spacing": ["warn", "always"],
+    "comma-dangle": ["warn", "only-multiline"],
+    "max-len": ["warn", 360]
+  }
+}

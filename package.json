@@ -12,8 +12,7 @@
   "dependencies": {
     "aws-sdk": "^2.50.0",
     "handlebars": "^4.0.8",
-    "jsonwebtoken": "^7.4.0",
-    "ramda": "^0.23.0"
+    "jsonwebtoken": "^7.4.0"
   },
   "license": "Apache-2.0",
   "author": {

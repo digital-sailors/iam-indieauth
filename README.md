@@ -29,3 +29,4 @@ DISCLAIMER: Authentication/Authorization is a critical part of online security. 
 - The login form is ugly
 - Temporary credentials should be requested from STS and they should be sent to the Lambda function
 - a form field for MFA should be integrated
+- HMAC variable should be encrypted

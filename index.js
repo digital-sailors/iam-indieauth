@@ -65,7 +65,6 @@ exports.lambda = function(event, context, callback) {
       });
     }
   } else if (event.httpMethod == 'POST' && event.path.startsWith('/indieauth/authorize')) {
-    console.log(event);
     // CASE 2: receive POST with IAM credentials
 
     // parse POST
@@ -131,7 +130,7 @@ exports.lambda = function(event, context, callback) {
         if (postData.redirect_uri == payload.redirect_uri && postData.client_uri == payload.client_uri) {
           // success
           // prepare response body depending on Accept header
-          if (event.headers.accept == 'application/x-www-form-urlencoded') {
+          if (event.headers.Accept == 'application/x-www-form-urlencoded') {
             callback(null, {
               statusCode: 200,
               headers: {
@@ -142,7 +141,7 @@ exports.lambda = function(event, context, callback) {
               body : querystring.stringify({ me: payload.me })
             });
 
-          } else if (event.headers.accept == 'application/json') {
+          } else if (event.headers.Accept == 'application/json') {
             callback(null, {
               statusCode: 200,
               headers: {
